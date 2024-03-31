@@ -23,12 +23,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-protected:
-	UPROPERTY(BlueprintReadWrite)
-	TArray<float> LanePositions;
-	UPROPERTY(BlueprintReadWrite)
-	TArray<FTransform> SpawnLocations;
-
-protected:
-	void InitVariables();
 };
