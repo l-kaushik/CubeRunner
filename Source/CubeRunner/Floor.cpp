@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+#include "Components/ArrowComponent.h"
 #include "Floor.h"
 
 // Sets default values
@@ -30,5 +31,17 @@ void AFloor::Tick(float DeltaTime)
 void AFloor::InitVariables()
 {
 	LanePositions = { -200.f, 0.f, 200.f };
+}
+
+void AFloor::InitEnemySpawnLocations()
+{
+	int index = 0;
+
+	for (float eachLane : LanePositions) {
+		for (int i = 0; i < 12; i++) {
+			SpawnLocations.Insert(FTransform(FVector(i * 400, eachLane, 0.f)), index);
+			index++;
+		}
+	}
 }
 

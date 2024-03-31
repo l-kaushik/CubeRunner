@@ -24,11 +24,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
+	void InitVariables();
+
+protected:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<float> LanePositions;
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FTransform> SpawnLocations;
 
 protected:
-	void InitVariables();
+	UFUNCTION(BlueprintCallable)
+	void InitEnemySpawnLocations();
 };
