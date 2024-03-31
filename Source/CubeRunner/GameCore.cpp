@@ -3,3 +3,7 @@
 
 #include "GameCore.h"
 
+AGameCore::AGameCore()
+{
+
+}

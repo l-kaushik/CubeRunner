@@ -13,5 +13,12 @@ UCLASS()
 class CUBERUNNER_API AGameCore : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	AGameCore();
+
+protected:
+	UPROPERTY(BlueprintReadWrite)
+	FTransform FloorAttachPoint;
+
 };
