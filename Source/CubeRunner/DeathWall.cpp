@@ -11,6 +11,7 @@
 ADeathWall::ADeathWall()
 {
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
+	RootComponent = BoxCollision;
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ADeathWall::OnBoxBeginOverlap);
 
 	WallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CubeMesh"));
