@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "GameStateInterface.h"
 #include "GameCore.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class CUBERUNNER_API AGameCore : public AGameModeBase
+UCLASS(Blueprintable)
+class CUBERUNNER_API AGameCore : public AGameModeBase, public IGameStateInterface
 {
 	GENERATED_BODY()
 
@@ -21,4 +22,12 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	FTransform FloorAttachPoint;
 
+	UPROPERTY(BlueprintReadWrite)
+	int CurrentScore;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void AddScore(int Score);
+public:
+	void SetScore_Implementation(int Score) override;
 };
