@@ -39,7 +39,7 @@ void AFloor::InitEnemySpawnLocations()
 
 	for (float eachLane : LanePositions) {
 		for (int i = 0; i < 12; i++) {
-			SpawnLocations.Insert(FTransform(FVector(i * 400, eachLane, 0.f)), index);
+			SpawnLocations.Insert(FTransform(FVector(i * 400, eachLane, 30.f)), index);
 			index++;
 		}
 	}
