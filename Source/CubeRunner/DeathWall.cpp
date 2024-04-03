@@ -10,11 +10,11 @@
 // Sets default values
 ADeathWall::ADeathWall()
 {
-	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(FName("BoxCollision"));
 	RootComponent = BoxCollision;
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ADeathWall::OnBoxBeginOverlap);
 
-	WallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CubeMesh"));
+	WallMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("CubeMesh"));
 	WallMesh->SetupAttachment(BoxCollision);
 }
 

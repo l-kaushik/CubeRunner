@@ -14,14 +14,14 @@ AEnemy::AEnemy()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Root"));
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(FName("SceneRoot"));
 	RootComponent = SceneRoot;
 
-	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collision"));
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(FName("BoxCollision"));
 	BoxCollision->SetRelativeLocation(FVector(0.f, 0.f, 20.f));
 	BoxCollision->SetupAttachment(SceneRoot);
 
-	CubeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Cube"));
+	CubeMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Cube"));
 	CubeMesh->SetupAttachment(BoxCollision);
 }
 // Called when the game starts or when spawned
@@ -29,7 +29,15 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	/*BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OnBoxBeginOverlap);*/
+	if (BoxCollision) 
+	{
+		BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OnBoxBeginOverlap);
+	}
+	else 
+	{
+		UE_LOG(LogTemp, Error, TEXT("Faild to create BoxCollision for AEnemy!"))
+	}
+
 }
 
 // Called every frame
@@ -52,7 +60,8 @@ void AEnemy::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Othe
 
 		Cast<AGameCore>(UGameplayStatics::GetGameMode(GetWorld()))->SetScore_Implementation(-1);
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, TEXT("Enemy"));
-		// play sound at location 
+		
+		// play sound at location [implement this function here]
 
 		this->Destroy();
 	}
