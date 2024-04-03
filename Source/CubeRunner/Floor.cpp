@@ -39,7 +39,21 @@ void AFloor::InitEnemySpawnLocations()
 
 	for (float eachLane : LanePositions) {
 		for (int i = 0; i < 12; i++) {
-			SpawnLocations.Insert(FTransform(FVector(i * 400, eachLane, 30.f)), index);
+
+			// Spawn an arrow component and store its world transform in SpawnLocations
+
+			UArrowComponent* ArrowComponent = NewObject<UArrowComponent>(this);
+			if (ArrowComponent) {
+				ArrowComponent->SetupAttachment(RootComponent);
+				ArrowComponent->SetRelativeTransform(FTransform(FVector(i * 400, eachLane, 30.f)));
+
+				SpawnLocations.Insert(ArrowComponent->GetComponentTransform(), index);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Failed to create an Arrow Component at %d"), index);
+			}
+
 			index++;
 		}
 	}
