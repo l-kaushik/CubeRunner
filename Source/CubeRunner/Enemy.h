@@ -9,6 +9,7 @@
 class UBoxComponent;
 class UStaticMeshComponent;
 class USceneComponent;
+class UMaterial;
 
 UCLASS()
 class CUBERUNNER_API AEnemy : public APawn
@@ -31,7 +32,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* BoxCollision;
 
 	UPROPERTY(EditAnywhere)
@@ -39,6 +40,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* SceneRoot;
+
+
 
 protected:
 	UFUNCTION()

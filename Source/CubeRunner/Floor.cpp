@@ -2,6 +2,8 @@
 
 
 #include "Components/ArrowComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Algo/RandomShuffle.h"
 #include "Floor.h"
 
 // Sets default values
@@ -55,6 +57,61 @@ void AFloor::InitEnemySpawnLocations()
 			}
 
 			index++;
+		}
+	}
+}
+
+void AFloor::SpawnEnemy()
+{
+	TArray<FTransform> RandomSpawnPoint = SpawnLocations;
+	Algo::RandomShuffle(RandomSpawnPoint);
+
+	for (int32 i = 0; i < 36; i++)
+	{
+		int TempSwitchVar = UKismetMathLibrary::RandomIntegerInRange(1, 10) > 7;
+		switch (TempSwitchVar)
+		{
+			case 0: 
+			{
+				if (EnemyCubeBlueprintClass)
+				{
+					UWorld* world = GetWorld();
+					if (world)
+					{
+						FActorSpawnParameters spawnParams;
+						spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+						spawnParams.Owner = this;
+
+						FRotator rotator(0.f, 0.f, 0.f);
+						FVector spawnLocation = RandomSpawnPoint[i].GetLocation();
+						
+						world->SpawnActor<AEnemy>(EnemyCubeBlueprintClass, spawnLocation, rotator, spawnParams);
+					}
+				}
+				else
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Failed to create an enemy cube"));
+				}
+				break;
+			}
+			case 1:
+			{
+				if (SafeCubeBlueprintClass)
+				{
+					UWorld* world = GetWorld();
+					if (world)
+					{
+						FActorSpawnParameters spawnParams;
+						spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+						spawnParams.Owner = this;
+
+						FRotator rotator(0.f, 0.f, 0.f);
+						FVector spawnLocation = RandomSpawnPoint[i].GetLocation();
+
+						world->SpawnActor<AEnemy>(SafeCubeBlueprintClass, spawnLocation, rotator, spawnParams);
+					}
+				}
+			}
 		}
 	}
 }

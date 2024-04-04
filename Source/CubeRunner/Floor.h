@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Enemy.h"
+#include "SafeCube.h"
 #include "Floor.generated.h"
 
 UCLASS()
@@ -32,7 +34,16 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FTransform> SpawnLocations;
 
+	UPROPERTY(EditAnywhere, Category = "Enemy");
+	TSubclassOf<class AEnemy> EnemyCubeBlueprintClass;
+	UPROPERTY(EditAnywhere, Category = "Enemy");
+	TSubclassOf<class AEnemy> SafeCubeBlueprintClass;
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void InitEnemySpawnLocations();
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnEnemy();
+
 };
