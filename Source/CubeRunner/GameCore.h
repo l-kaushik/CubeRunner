@@ -28,6 +28,13 @@ protected:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void AddScore(int Score);
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateGameState();
+
+	UFUNCTION(BLueprintCallable)
+	void AddFloor();
+
 public:
 	void SetScore_Implementation(int Score) override;
 };

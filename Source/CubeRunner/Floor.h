@@ -46,4 +46,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void SpawnEnemy();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	FTransform GetAttachPoint();
 };
