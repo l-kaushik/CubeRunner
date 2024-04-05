@@ -10,6 +10,9 @@
 /**
  * 
  */
+
+class AFloor;
+
 UCLASS(Blueprintable)
 class CUBERUNNER_API AGameCore : public AGameModeBase, public IGameStateInterface
 {
@@ -24,6 +27,12 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite)
 	int CurrentScore;
+
+	UPROPERTY(EditAnywhere, Category = "Other_Class_Ref", BlueprintReadWrite);
+	TArray<AFloor *> Floors;
+
+	UPROPERTY(EditAnywhere, Category = "Other_Class_Ref");
+	TSubclassOf<AFloor> BPFloorRef;
 
 protected:
 	UFUNCTION(BlueprintCallable)

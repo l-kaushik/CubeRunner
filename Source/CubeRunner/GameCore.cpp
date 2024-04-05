@@ -44,7 +44,26 @@ void AGameCore::AddFloor()
 	/*
 		This function keeps track of number of floor spawned in world and manage them
 	*/
+	
+	if (BPFloorRef)
+	{
+		UWorld* world = GetWorld();
+		if (world)
+		{
+			FActorSpawnParameters spawnParams;
+			spawnParams.Owner = this;
 
+			FRotator rotator(0.f, 0.f, 0.f);
+			FVector spawnLocation = FloorAttachPoint.GetLocation();
+
+			AFloor* NewFloor = world->SpawnActor<AFloor>(BPFloorRef, spawnLocation, rotator, spawnParams);
+
+			FloorAttachPoint = NewFloor->GetAttachPoint();
+
+			Floors.Insert(NewFloor, Floors.Num());
+
+		}
+	}
 
 }
 
