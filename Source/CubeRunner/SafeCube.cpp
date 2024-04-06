@@ -18,7 +18,13 @@ void ASafeCube::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* O
 {
 	if (Cast<ACharacter>(OtherActor) == (UGameplayStatics::GetPlayerCharacter(GetWorld(),0))) {
 
-		Cast<AGameCore>(UGameplayStatics::GetGameMode(GetWorld()))->SetScore_Implementation(1);
+		auto GameMode = GetWorld()->GetAuthGameMode();
+		if (GameMode->Implements<UGameStateInterface>())
+		{
+			IGameStateInterface::Execute_SetScore(GameMode, 1);
+
+		}
+
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, TEXT("Safe"));
 		// play sound at location 
 

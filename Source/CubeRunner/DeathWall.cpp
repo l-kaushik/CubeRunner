@@ -30,6 +30,8 @@ void ADeathWall::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* 
 		OtherActor->AddActorWorldOffset(FVector(0.0f, 0.0f, 0.0f));
 
 		UE_LOG(LogTemp, Warning,TEXT("Cube is being overlapped"))
+
+			//Create End UI
 	}
 }
 

@@ -68,8 +68,33 @@ void AGameCore::AddFloor()
 }
 
 
+void AGameCore::ExtendFloor()
+{
+	/*
+		This function is responsible for extending and reducing the floor
+	*/
+
+	if (!IsWallSpawned)
+	{
+		AddFloor();
+
+		if (Floors.Num() > 2)
+		{
+			AFloor* TempFloor = Floors[0];
+			Floors.RemoveAt(0);
+			TempFloor->Destroy();
+		}
+	}
+}
+
 // Interface function
 void AGameCore::SetScore_Implementation(int Score)
 {
 	AddScore(Score);
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, TEXT("GameCore"));
+}
+
+void AGameCore::CallExtendFloor_Implementation()
+{
+	ExtendFloor();
 }

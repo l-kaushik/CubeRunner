@@ -28,6 +28,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	int CurrentScore;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool IsWallSpawned;
+
 	UPROPERTY(EditAnywhere, Category = "Other_Class_Ref", BlueprintReadWrite);
 	TArray<AFloor *> Floors;
 
@@ -44,6 +47,10 @@ protected:
 	UFUNCTION(BLueprintCallable)
 	void AddFloor();
 
+	UFUNCTION(BlueprintCallable)
+	void ExtendFloor();
+
 public:
 	void SetScore_Implementation(int Score) override;
+	void CallExtendFloor_Implementation() override;
 };

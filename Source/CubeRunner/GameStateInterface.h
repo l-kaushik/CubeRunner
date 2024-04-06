@@ -18,5 +18,8 @@ class IGameStateInterface
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void SetScore(int Score);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void CallExtendFloor();
 	
 };
