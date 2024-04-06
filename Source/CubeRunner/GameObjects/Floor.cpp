@@ -4,12 +4,13 @@
 #include "Components/ArrowComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Algo/RandomShuffle.h"
-#include "GameCore.h"
-#include "GameStateInterface.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
+
 #include "Enemy.h"
 #include "SafeCube.h"
+#include "../GameModeAndInterfaces/GameCore.h"
+#include "../GameModeAndInterfaces/GameStateInterface.h"
 #include "Floor.h"
 
 // Sets default values

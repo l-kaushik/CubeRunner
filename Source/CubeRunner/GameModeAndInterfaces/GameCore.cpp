@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Floor.h"
+#include "../GameObjects/Floor.h"
 #include "GameCore.h"
 
 AGameCore::AGameCore()
@@ -85,6 +85,19 @@ void AGameCore::ExtendFloor()
 			TempFloor->Destroy();
 		}
 	}
+}
+
+void AGameCore::InitTiles()
+{
+	for (int i = 0; i <= 2; i++)
+	{
+		AddFloor();
+	}
+}
+
+void AGameCore::InitUI()
+{
+
 }
 
 // Interface function

@@ -5,8 +5,9 @@
 #include "Components/SceneComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
-#include "GameCore.h"
-#include "GameStateInterface.h"
+
+#include "../GameModeAndInterfaces/GameCore.h"
+#include "../GameModeAndInterfaces/GameStateInterface.h"
 #include "Enemy.h"
 
 // Sets default values

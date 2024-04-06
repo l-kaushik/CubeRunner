@@ -5,7 +5,8 @@
 #include "Components/SceneComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
-#include "GameCore.h"
+
+#include "../GameModeAndInterfaces/GameCore.h"
 #include "SafeCube.h"
 
 // Called when the game starts or when spawned
