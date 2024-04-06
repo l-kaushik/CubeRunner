@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Enemy.h"
-#include "SafeCube.h"
+
 #include "Floor.generated.h"
+
+class AEnemy;
+class ASafeCube;
 
 UCLASS()
 class CUBERUNNER_API AFloor : public AActor
@@ -33,6 +35,8 @@ protected:
 	TArray<float> LanePositions;
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FTransform> SpawnLocations;
+	UPROPERTY(VisibleDefaultsOnly)
+	TArray<AEnemy *> AllCubesRef;
 
 	UPROPERTY(EditAnywhere, Category = "Enemy");
 	TSubclassOf<class AEnemy> EnemyCubeBlueprintClass;

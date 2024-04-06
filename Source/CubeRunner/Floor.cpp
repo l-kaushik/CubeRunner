@@ -8,6 +8,8 @@
 #include "GameStateInterface.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
+#include "Enemy.h"
+#include "SafeCube.h"
 #include "Floor.h"
 
 // Sets default values
@@ -89,7 +91,9 @@ void AFloor::SpawnEnemy()
 						FRotator rotator(0.f, 0.f, 0.f);
 						FVector spawnLocation = RandomSpawnPoint[i].GetLocation();
 						
-						world->SpawnActor<AEnemy>(EnemyCubeBlueprintClass, spawnLocation, rotator, spawnParams);
+						AEnemy* Cube = world->SpawnActor<AEnemy>(EnemyCubeBlueprintClass, spawnLocation, rotator, spawnParams);
+
+						AllCubesRef.Insert(Cube, AllCubesRef.Num());
 					}
 				}
 				else
@@ -112,7 +116,9 @@ void AFloor::SpawnEnemy()
 						FRotator rotator(0.f, 0.f, 0.f);
 						FVector spawnLocation = RandomSpawnPoint[i].GetLocation();
 
-						world->SpawnActor<AEnemy>(SafeCubeBlueprintClass, spawnLocation, rotator, spawnParams);
+						AEnemy* Cube = world->SpawnActor<AEnemy>(SafeCubeBlueprintClass, spawnLocation, rotator, spawnParams);
+
+						AllCubesRef.Insert(Cube, AllCubesRef.Num());
 					}
 				}
 			}
@@ -128,6 +134,12 @@ void AFloor::ExtendFloorTrigger(AActor* OtherActor)
 		if (GameMode && GameMode->Implements<UGameStateInterface>())
 		{
 			IGameStateInterface::Execute_CallExtendFloor(GameMode);
+
+			// Destroy all cubes
+			for (auto cube : AllCubesRef)
+			{
+				cube->Destroy();
+			}
 		}
 	}
 }
