@@ -50,6 +50,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void ExtendFloor();
 
+	UFUNCTION(BlueprintCallable)
+	void InitTiles();
+
 public:
 	void SetScore_Implementation(int Score) override;
 	void CallExtendFloor_Implementation() override;

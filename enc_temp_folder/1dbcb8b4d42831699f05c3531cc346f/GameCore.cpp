@@ -87,14 +87,6 @@ void AGameCore::ExtendFloor()
 	}
 }
 
-void AGameCore::InitTiles()
-{
-	for (int i = 0; i <= 2; i++)
-	{
-		AddFloor();
-	}
-}
-
 // Interface function
 void AGameCore::SetScore_Implementation(int Score)
 {
