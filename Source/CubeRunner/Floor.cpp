@@ -4,6 +4,10 @@
 #include "Components/ArrowComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Algo/RandomShuffle.h"
+#include "GameCore.h"
+#include "GameStateInterface.h"
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 #include "Floor.h"
 
 // Sets default values
@@ -112,6 +116,18 @@ void AFloor::SpawnEnemy()
 					}
 				}
 			}
+		}
+	}
+}
+
+void AFloor::ExtendFloorTrigger(AActor* OtherActor)
+{
+	if (Cast<ACharacter>(OtherActor) == (UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) 
+	{
+		auto GameMode = GetWorld()->GetAuthGameMode();
+		if (GameMode && GameMode->Implements<UGameStateInterface>())
+		{
+			IGameStateInterface::Execute_CallExtendFloor(GameMode);
 		}
 	}
 }

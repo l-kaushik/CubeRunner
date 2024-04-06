@@ -46,6 +46,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void SpawnEnemy();
 
+	UFUNCTION(BlueprintCallable)
+	void ExtendFloorTrigger(AActor* OtherActor);
+
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	FTransform GetAttachPoint();
