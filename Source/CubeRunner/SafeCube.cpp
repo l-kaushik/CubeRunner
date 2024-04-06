@@ -25,7 +25,6 @@ void ASafeCube::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* O
 
 		}
 
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, TEXT("Safe"));
 		// play sound at location 
 
 		this->Destroy();

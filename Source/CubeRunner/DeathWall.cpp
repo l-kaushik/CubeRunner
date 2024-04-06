@@ -29,8 +29,6 @@ void ADeathWall::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* 
 	if (Cast<ACharacter>(OtherActor) == (UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) {
 		OtherActor->AddActorWorldOffset(FVector(0.0f, 0.0f, 0.0f));
 
-		UE_LOG(LogTemp, Warning,TEXT("Cube is being overlapped"))
-
 			//Create End UI
 	}
 }

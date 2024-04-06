@@ -19,15 +19,6 @@ AEnemy::AEnemy()
 	RootComponent = SceneRoot;
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(FName("BoxCollision"));
-	if (BoxCollision)
-	{
-		UE_LOG(LogTemp, Error, TEXT("BoxCollision for AEnemy is created"))
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Faild to create BoxCollision for AEnemy in constructor"))
-	}
-
 	BoxCollision->SetRelativeLocation(FVector(0.f, 0.f, 20.f));
 	BoxCollision->SetupAttachment(SceneRoot);
 
@@ -73,8 +64,6 @@ void AEnemy::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Othe
 		{
 			IGameStateInterface::Execute_SetScore(GameMode, -1);
 		}
-
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, TEXT("Enemy"));
 		
 		// play sound at location [implement this function here]
 

@@ -91,7 +91,6 @@ void AGameCore::ExtendFloor()
 void AGameCore::SetScore_Implementation(int Score)
 {
 	AddScore(Score);
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, TEXT("GameCore"));
 }
 
 void AGameCore::CallExtendFloor_Implementation()
