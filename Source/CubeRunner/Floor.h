@@ -53,6 +53,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void ExtendFloorTrigger(AActor* OtherActor);
 
+	UFUNCTION(BlueprintCallable)
+	void OutOfBoundTrigger(AActor* OtherActor);
+
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	FTransform GetAttachPoint();
