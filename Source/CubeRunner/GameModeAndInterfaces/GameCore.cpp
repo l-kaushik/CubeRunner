@@ -1,13 +1,42 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "../GameObjects/Floor.h"
+#include "../UIs/PlayerHud.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 #include "GameCore.h"
 
 AGameCore::AGameCore()
 {
 	// Setting Default Values
 	CurrentScore = 0;
+
+	PlayerHudClass = nullptr;
+	PlayerHud = nullptr;
 }
+
+void AGameCore::BeginPlay()
+{
+	Super::BeginPlay();
+
+	InitTiles();
+
+	InitUI();
+	
+	// Initialize Last Score Hit Timer function
+}
+
+//Void AGameCore::EndPlay(const EEndPlayerReason::Type EndPlayReason)
+//{
+//	if (PlayerHud)
+//	{
+//		PlayerHud->RemoveFromParent();
+//		PlayerHud->nullptr;
+//	}
+//	
+//	Super::EndPlay(EndPlayReason);
+//}
 
 void AGameCore::AddScore(int Score)
 {
@@ -97,7 +126,62 @@ void AGameCore::InitTiles()
 
 void AGameCore::InitUI()
 {
+	APlayerController* FPC = UGameplayStatics::GetPlayerController(GetWorld(),0);
+	check(FPC);
+	PlayerHud = CreateWidget<UPlayerHud>(FPC, PlayerHudClass);
+	check(PlayerHud);
+	PlayerHud->AddToPlayerScreen();
+	PlayerHud->UpdateScore(0);
+}
 
+void AGameCore::InitializeLastScoreHitTimer()
+{
+	if (!IsWallSpawned)
+	{
+		LastScoreUpdate = 0;
+
+		// update time
+		PlayerHud->UpdateTime(LastScoreUpdate);
+
+		FTimerHandle TimerHandle;
+
+		// set timer to call function after a delay
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &AGameCore::UpdateLastScoreHitTimer, 1.0f, true);
+	}
+}
+
+void AGameCore::UpdateLastScoreHitTimer()
+{
+	if (LastScoreUpdate > 10)
+	{
+		SpawnWall();
+		PlayerHud->UpdateTime(-1);
+		IsWallSpawned = true;
+	}
+	else
+	{
+		PlayerHud->UpdateTime(LastScoreUpdate);
+		LastScoreUpdate++;
+	}
+}
+
+void AGameCore::SpawnWall()
+{
+	if (!IsWallSpawned)
+	{
+		if (DeathWallBlueprintRef)
+		{
+			UWorld* world = GetWorld();
+			if (world)
+			{
+				FActorSpawnParameters spawnParams;
+				spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				spawnParams.Owner = this;
+
+				ADeathWall* DeathWall = world->SpawnActor<ADeathWall>(DeathWallBlueprintRef, FloorAttachPoint.GetLocation(), FloorAttachPoint.GetRotation(), spawnParams);
+			}
+		}
+	}
 }
 
 // Interface function

@@ -12,6 +12,7 @@
  */
 
 class AFloor;
+class UPlayerHud;
 
 UCLASS(Blueprintable)
 class CUBERUNNER_API AGameCore : public AGameModeBase, public IGameStateInterface
@@ -22,11 +23,20 @@ public:
 	AGameCore();
 
 protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	//virtual Void EndPlay(const EEndPlayerReason::Type EndPlayReason) override;
+
+protected:
 	UPROPERTY(BlueprintReadWrite)
 	FTransform FloorAttachPoint;
 
 	UPROPERTY(BlueprintReadWrite)
 	int CurrentScore;
+
+	UPROPERTY()
+	int LastScoreUpdate;
 
 	UPROPERTY(BlueprintReadWrite)
 	bool IsWallSpawned;
@@ -36,6 +46,17 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Other_Class_Ref");
 	TSubclassOf<AFloor> BPFloorRef;
+
+	// widget class to spawn hud
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UPlayerHud> PlayerHudClass;
+
+	// the widget instance that i m using as my hud
+	UPROPERTY()
+	class UPlayerHud* PlayerHud;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ADeathWall> DeathWallBlueprintRef;
 
 protected:
 	UFUNCTION(BlueprintCallable)
@@ -55,6 +76,15 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void InitUI();
+
+	UFUNCTION()
+	void InitializeLastScoreHitTimer();
+
+	UFUNCTION()
+	void UpdateLastScoreHitTimer();
+
+	UFUNCTION()
+	void SpawnWall();
 
 public:
 	void SetScore_Implementation(int Score) override;
