@@ -12,6 +12,7 @@ void ACubePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	
 }
 
 // Called every frame
@@ -24,4 +25,14 @@ void ACubePlayer::Tick(float DeltaTime)
 void ACubePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void ACubePlayer::SetDeltaLocationX_Implementation()
+{
+
+}
+
+float ACubePlayer::GetDeltaLocationX_Implementation()
+{
+	return DeltaLocationX;
 }

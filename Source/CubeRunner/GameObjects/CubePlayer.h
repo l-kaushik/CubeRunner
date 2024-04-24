@@ -2,10 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "../GameModeAndInterfaces/CubePlayerInterface.h"
 #include "CubePlayer.generated.h"
 
 UCLASS()
-class CUBERUNNER_API ACubePlayer : public ACharacter
+class CUBERUNNER_API ACubePlayer : public ACharacter, public ICubePlayerInterface
 {
 	GENERATED_BODY()
 
@@ -23,4 +24,15 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+public:
+	UPROPERTY(BlueprintReadWrite)
+	float DeltaLocationX;
+
+	UPROPERTY(BlueprintReadWrite)
+	float DeltaSeconds;
+
+public:
+	void SetDeltaLocationX_Implementation() override;
+	float GetDeltaLocationX_Implementation() override;
 };
