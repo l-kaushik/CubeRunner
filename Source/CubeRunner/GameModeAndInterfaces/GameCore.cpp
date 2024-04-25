@@ -2,9 +2,13 @@
 
 #include "../GameObjects/Floor.h"
 #include "../UIs/PlayerHud.h"
+#include "../GameObjects/DeathWall.h"
+#include "CubePlayerInterface.h"
+
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
+#include "GameFramework/Character.h"
 #include "GameCore.h"
 
 AGameCore::AGameCore()
@@ -21,10 +25,8 @@ void AGameCore::BeginPlay()
 	Super::BeginPlay();
 
 	InitTiles();
-
-	InitUI();
-	
-	// Initialize Last Score Hit Timer function
+	InitUI();	
+	InitializeLastScoreHitTimer();
 }
 
 //Void AGameCore::EndPlay(const EEndPlayerReason::Type EndPlayReason)
@@ -48,6 +50,8 @@ void AGameCore::AddScore(int Score)
 	CurrentScore += Score;
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, FString::Printf(TEXT("%d"), CurrentScore));
+
+	// update game state
 }
 
 void AGameCore::UpdateGameState()
@@ -62,7 +66,7 @@ void AGameCore::UpdateGameState()
 	}
 	else
 	{
-		//UpdateScore()
+		PlayerHud->UpdateScore(CurrentScore);
 
 		// IncreasePlayerSpeed()
 	}
@@ -178,9 +182,39 @@ void AGameCore::SpawnWall()
 				spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 				spawnParams.Owner = this;
 
-				ADeathWall* DeathWall = world->SpawnActor<ADeathWall>(DeathWallBlueprintRef, FloorAttachPoint.GetLocation(), FloorAttachPoint.GetRotation(), spawnParams);
+				FRotator rotator(FloorAttachPoint.GetRotation());
+
+				ADeathWall* DeathWall = world->SpawnActor<ADeathWall>(DeathWallBlueprintRef, FloorAttachPoint.GetLocation(), rotator, spawnParams);
 			}
 		}
+	}
+}
+
+void AGameCore::IncreasePlayerSpeed()
+{
+	/*
+	* This function increase player speed according to current score value
+	*/
+
+	if (CurrentScore > ScoreThreshold)
+	{	
+		/*
+		* Increase player speed by 200 on every 10 points
+		*/
+
+		auto GameMode = GetWorld()->GetAuthGameMode();
+		if (GameMode && GameMode->Implements<UCubePlayerInterface>())
+		{
+			ICubePlayerInterface::Execute_SetDeltaLocationX(GameMode,ICubePlayerInterface::Execute_GetDeltaLocationX(GameMode) + 200.0f);
+
+			ScoreThreshold += 10;
+
+			InitializeLastScoreHitTimer();
+		}
+	}
+	else
+	{
+		InitializeLastScoreHitTimer();
 	}
 }
 

@@ -41,6 +41,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	bool IsWallSpawned;
 
+	UPROPERTY()
+	int ScoreThreshold;
+
 	UPROPERTY(EditAnywhere, Category = "Other_Class_Ref", BlueprintReadWrite);
 	TArray<AFloor *> Floors;
 
@@ -57,6 +60,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class ADeathWall> DeathWallBlueprintRef;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ACubePlayer> PlayerBlueprintRef;
 
 protected:
 	UFUNCTION(BlueprintCallable)
@@ -85,6 +91,9 @@ protected:
 
 	UFUNCTION()
 	void SpawnWall();
+
+	UFUNCTION()
+	void IncreasePlayerSpeed();
 
 public:
 	void SetScore_Implementation(int Score) override;
