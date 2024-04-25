@@ -33,6 +33,6 @@ public:
 	float DeltaSeconds;
 
 public:
-	void SetDeltaLocationX_Implementation() override;
-	float GetDeltaLocationX_Implementation() override;
+	void SetDeltaLocationX_Implementation(float x);
+	float GetDeltaLocationX_Implementation();
 };

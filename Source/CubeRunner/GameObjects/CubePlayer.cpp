@@ -27,9 +27,10 @@ void ACubePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void ACubePlayer::SetDeltaLocationX_Implementation()
+// Interface functions
+void ACubePlayer::SetDeltaLocationX_Implementation(float x)
 {
-
+	DeltaLocationX = x;
 }
 
 float ACubePlayer::GetDeltaLocationX_Implementation()
