@@ -11,14 +11,18 @@ ACubePlayer::ACubePlayer()
 void ACubePlayer::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
+	DeltaLocationX = 500.f;
 }
 
 // Called every frame
 void ACubePlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	DeltaSeconds = DeltaTime;
+
+	AddActorWorldOffset(FVector(DeltaSeconds * DeltaLocationX,0.0f, 0.0f));
+
 }
 
 // Called to bind functionality to input
