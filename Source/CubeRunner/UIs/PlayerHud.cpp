@@ -1,8 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
-#include "kismet/KismetStringLibrary.h"
-#include "kismet/KismetTextLibrary.h"
 #include "Components/EditableText.h"
 #include "PlayerHud.h"
 
