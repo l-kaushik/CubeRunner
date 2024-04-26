@@ -101,4 +101,5 @@ protected:
 public:
 	void SetScore_Implementation(int Score) override;
 	void CallExtendFloor_Implementation() override;
+	int32 GetCurrentScore_Implementation() override;
 };

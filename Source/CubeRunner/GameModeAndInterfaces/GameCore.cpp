@@ -230,3 +230,8 @@ void AGameCore::CallExtendFloor_Implementation()
 {
 	ExtendFloor();
 }
+
+int32 AGameCore::GetCurrentScore_Implementation()
+{
+	return CurrentScore;
+}

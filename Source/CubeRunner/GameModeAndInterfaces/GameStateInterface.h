@@ -21,5 +21,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void CallExtendFloor();
+
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetCurrentScore();
 	
 };
