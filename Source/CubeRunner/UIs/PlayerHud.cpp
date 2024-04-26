@@ -22,14 +22,10 @@ void UPlayerHud::UpdateTime(int32 Time)
 {
 	if (Time == -1)
 	{
-		//return UKismetTextLibrary::Conv_StringToText(FString("Wall Spawned!"));
-		LastScoreHitTimer->SetText(FText::Format(INVTEXT("Time: {0}"), Time));
+		LastScoreHitTimer->SetText(FText::FromString("Wall Spawned!"));
 	}
 	else
 	{
-	/*	FString FirstPart = "Time: ";
-		LastScoreHitTimer->SetText(UKismetTextLibrary::Conv_StringToText((FirstPart.Append(UKismetStringLibrary::Conv_IntToString(Time)))));*/
-
 		LastScoreHitTimer->SetText(FText::Format(INVTEXT("Time: {0}"), Time));
 	}
 }
