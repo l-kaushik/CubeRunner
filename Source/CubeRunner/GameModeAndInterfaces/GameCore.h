@@ -29,11 +29,14 @@ protected:
 	//virtual Void EndPlay(const EEndPlayerReason::Type EndPlayReason) override;
 
 protected:
+	FTimerHandle TimerHandle;
+
+protected:
 	UPROPERTY(BlueprintReadWrite)
 	FTransform FloorAttachPoint;
 
 	UPROPERTY(BlueprintReadWrite)
-	int CurrentScore;
+	int32 CurrentScore;
 
 	UPROPERTY()
 	int LastScoreUpdate;

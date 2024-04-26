@@ -15,6 +15,7 @@ AGameCore::AGameCore()
 {
 	// Setting Default Values
 	CurrentScore = 0;
+	ScoreThreshold = 10;
 
 	PlayerHudClass = nullptr;
 	PlayerHud = nullptr;
@@ -49,9 +50,9 @@ void AGameCore::AddScore(int Score)
 
 	CurrentScore += Score;
 
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, FString::Printf(TEXT("%d"), CurrentScore));
+	//GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Blue, FString::Printf(TEXT("%d"), CurrentScore));
 
-	// update game state
+	UpdateGameState();
 }
 
 void AGameCore::UpdateGameState()
@@ -66,9 +67,8 @@ void AGameCore::UpdateGameState()
 	}
 	else
 	{
+		IncreasePlayerSpeed();
 		PlayerHud->UpdateScore(CurrentScore);
-
-		// IncreasePlayerSpeed()
 	}
 }
 
@@ -147,7 +147,8 @@ void AGameCore::InitializeLastScoreHitTimer()
 		// update time
 		PlayerHud->UpdateTime(LastScoreUpdate);
 
-		FTimerHandle TimerHandle;
+		//clear previously set timer
+		GetWorldTimerManager().ClearTimer(TimerHandle);
 
 		// set timer to call function after a delay
 		GetWorldTimerManager().SetTimer(TimerHandle, this, &AGameCore::UpdateLastScoreHitTimer, 1.0f, true);
@@ -202,10 +203,11 @@ void AGameCore::IncreasePlayerSpeed()
 		* Increase player speed by 200 on every 10 points
 		*/
 
-		auto GameMode = GetWorld()->GetAuthGameMode();
-		if (GameMode && GameMode->Implements<UCubePlayerInterface>())
+		auto Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		if (Player && Player->Implements<UCubePlayerInterface>())
 		{
-			ICubePlayerInterface::Execute_SetDeltaLocationX(GameMode,ICubePlayerInterface::Execute_GetDeltaLocationX(GameMode) + 200.0f);
+			float CurrentDeltaLocationX = ICubePlayerInterface::Execute_GetDeltaLocationX(Player);
+			ICubePlayerInterface::Execute_SetDeltaLocationX(Player,CurrentDeltaLocationX + 200.0f);
 
 			ScoreThreshold += 10;
 
