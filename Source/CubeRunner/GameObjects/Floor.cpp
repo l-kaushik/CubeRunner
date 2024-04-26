@@ -154,7 +154,10 @@ void AFloor::ExtendFloorTrigger(AActor* OtherActor)
 			// Destroy all cubes
 			for (auto cube : AllCubesRef)
 			{
-				cube->Destroy();
+				if (cube)
+				{
+					cube->Destroy();
+				}
 			}
 		}
 	}
