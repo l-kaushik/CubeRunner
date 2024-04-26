@@ -1,26 +1,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "Blueprint/UserWidget.h"
 #include "OptionMenu.generated.h"
 
 UCLASS()
-class CUBERUNNER_API AOptionMenu : public ACharacter
+class CUBERUNNER_API UOptionMenu : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
-	// Sets default values for this empty's properties
-	AOptionMenu();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };
