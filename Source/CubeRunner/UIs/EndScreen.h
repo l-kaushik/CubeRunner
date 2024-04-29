@@ -12,15 +12,16 @@ class CUBERUNNER_API UEndScreen : public UUserWidget
 protected:
 	int32 Score;
 
-
-public:
-
 	virtual void NativeConstruct();
-
-	void Execute_MenuButton();
 
 	// widget to end screen
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UEditableText* PlayerScored;
 
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	// Button to open main menu
+	class UCustomButton* MainMenu;
+
+	UFUNCTION()
+	void OnMainMenuClicked();
 };

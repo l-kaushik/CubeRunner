@@ -5,6 +5,7 @@
 
 #include "../GameModeAndInterfaces/GameCore.h"
 #include "../GameModeAndInterfaces/GameStateInterface.h"
+#include "Assets/CustomButton.h"
 #include "EndScreen.h"
 
 void UEndScreen::NativeConstruct()
@@ -26,11 +27,17 @@ void UEndScreen::NativeConstruct()
 
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetShowMouseCursor(true);
 	}
+
+	// Setting up main menu button
+	if (MainMenu)
+	{
+		MainMenu->OnButtonClicked.AddDynamic(this, &UEndScreen::OnMainMenuClicked);
+	}
 }
 
-
-void UEndScreen::Execute_MenuButton()
+void UEndScreen::OnMainMenuClicked()
 {
+	GEngine->AddOnScreenDebugMessage(0, 2.f, FColor::Blue, FString("Main Menu Clicked"));
 }
 
 
