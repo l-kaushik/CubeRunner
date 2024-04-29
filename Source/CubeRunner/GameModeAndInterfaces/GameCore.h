@@ -62,6 +62,12 @@ protected:
 	class UPlayerHud* PlayerHud;
 
 	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UEndScreen> EndScreenClass;
+
+	UPROPERTY()
+	class UEndScreen* EndScreen;
+
+	UPROPERTY(EditAnywhere)
 	TSubclassOf<class ADeathWall> DeathWallBlueprintRef;
 
 	UPROPERTY(EditAnywhere)
@@ -97,6 +103,12 @@ protected:
 
 	UFUNCTION()
 	void IncreasePlayerSpeed();
+
+	UFUNCTION()
+	void DisplayEndScreen();
+
+	UFUNCTION()
+	void CreateEndScreenUI();
 
 public:
 	void SetScore_Implementation(int Score) override;

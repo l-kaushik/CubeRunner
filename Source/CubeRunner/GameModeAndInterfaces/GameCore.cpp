@@ -2,6 +2,7 @@
 
 #include "../GameObjects/Floor.h"
 #include "../UIs/PlayerHud.h"
+#include "../UIs/EndScreen.h"
 #include "../GameObjects/DeathWall.h"
 #include "CubePlayerInterface.h"
 
@@ -63,7 +64,7 @@ void AGameCore::UpdateGameState()
 
 	if (CurrentScore < 0)
 	{
-		// DisplayEndScreen ()
+		DisplayEndScreen();
 	}
 	else
 	{
@@ -218,6 +219,31 @@ void AGameCore::IncreasePlayerSpeed()
 	{
 		InitializeLastScoreHitTimer();
 	}
+}
+
+void AGameCore::DisplayEndScreen()
+{
+	CurrentScore = 0;
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+	// set delta location x to 0
+	auto Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	if (Player && Player->Implements<UCubePlayerInterface>())
+	{
+		ICubePlayerInterface::Execute_SetDeltaLocationX(Player, 0);
+	}
+
+	CreateEndScreenUI();
+}
+
+void AGameCore::CreateEndScreenUI()
+{
+	APlayerController* FPC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	check(FPC);
+	EndScreen = CreateWidget<UEndScreen>(FPC, EndScreenClass);
+	check(EndScreen);
+	EndScreen->AddToPlayerScreen();
+	
 }
 
 // Interface function
