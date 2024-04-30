@@ -2,6 +2,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/EditableText.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "../GameModeAndInterfaces/GameCore.h"
 #include "../GameModeAndInterfaces/GameStateInterface.h"
@@ -37,7 +38,9 @@ void UEndScreen::NativeConstruct()
 
 void UEndScreen::OnMainMenuClicked()
 {
-	GEngine->AddOnScreenDebugMessage(0, 2.f, FColor::Blue, FString("Main Menu Clicked"));
+	// open the main menu level
+
+	UGameplayStatics::OpenLevel(GetWorld(), "MainMenu");
 }
 
 
