@@ -8,4 +8,26 @@ UCLASS()
 class CUBERUNNER_API UMainMenu : public UUserWidget
 {
 	GENERATED_BODY()
+
+protected:
+
+	virtual void NativeConstruct();
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UCustomButton* Play;
+	
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UCustomButton* Options;
+	
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UCustomButton* QuitGameButton;
+
+	UFUNCTION()
+	void OnPlayClicked();
+	
+	UFUNCTION()
+	void OnOptionsClicked();
+	
+	UFUNCTION()
+	void OnQuitGameButtonClicked();
 };
