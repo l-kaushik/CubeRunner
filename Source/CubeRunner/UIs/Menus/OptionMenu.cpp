@@ -49,6 +49,13 @@ void UOptionMenu::NativeConstruct()
 		IncrTexture->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrTextureClicked);
 		DecrTexture->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrTextureClicked);
 	}
+
+	// Window Mode
+	if (IncrWindow && DecrWindow)
+	{
+		IncrWindow->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrWindowClicked);
+		DecrWindow->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrWindowClicked);
+	}
 }
 
 void UOptionMenu::OnPresetSettingClicked()
@@ -119,4 +126,14 @@ void UOptionMenu::OnIncrTextureClicked()
 void UOptionMenu::OnDecrTextureClicked()
 {
 	TextureQuality = UKismetMathLibrary::Clamp(TextureQuality - 1, 0, 4);
+}
+
+void UOptionMenu::OnIncrWindowClicked()
+{
+	WindowMode = UKismetMathLibrary::Clamp(WindowMode + 1, 0, 2);
+}
+
+void UOptionMenu::OnDecrWindowClicked()
+{
+	WindowMode = UKismetMathLibrary::Clamp(WindowMode - 1, 0, 2);
 }

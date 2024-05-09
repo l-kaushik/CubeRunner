@@ -110,7 +110,11 @@ protected:
 	UFUNCTION()
 	void OnDecrTextureClicked();
 
-
+	// Window Mode
+	UFUNCTION()
+	void OnIncrWindowClicked();
+	UFUNCTION()
+	void OnDecrWindowClicked();
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -130,4 +134,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool VSyncEnabled;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 WindowMode;
 };
