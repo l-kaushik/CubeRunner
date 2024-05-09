@@ -72,15 +72,27 @@ protected:
 
 protected:
 
+	// Frame Rate
 	UFUNCTION()
 	void OnPresetSettingClicked();
 	UFUNCTION()
 	void OnIncrFPSClicked();
 	UFUNCTION()
-	void OnDecrFPSClicked();
+	void OnDecrFPSClicked();	
+
+	// Anti-Aliasing
+	UFUNCTION()
+	void OnIncrAAClicked();
+	UFUNCTION()
+	void OnDecrAAClicked();
+
+
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float FrameRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 AAQuality;
 
 };

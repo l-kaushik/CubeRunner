@@ -8,16 +8,26 @@ void UOptionMenu::NativeConstruct()
 {
 	// event function binding
 
+	// Frame Rate
 	if (IncrFPS && DecrFPS)
 	{
 		IncrFPS->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrFPSClicked);
 		DecrFPS->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrFPSClicked);
+	}
+
+	// Anti-Aliasing
+	if (IncrAliasing && DecrAliasing)
+	{
+		IncrAliasing->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrAAClicked);
+		DecrAliasing->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrAAClicked);
 	}
 }
 
 void UOptionMenu::OnPresetSettingClicked()
 {
 }
+
+// Frame Rate
 
 void UOptionMenu::OnIncrFPSClicked()
 {
@@ -27,4 +37,16 @@ void UOptionMenu::OnIncrFPSClicked()
 void UOptionMenu::OnDecrFPSClicked()
 {
 	FrameRate = UKismetMathLibrary::FClamp(FrameRate - 30.f, 30.f, 180.f);
+}
+
+// Anti-Aliasing
+
+void UOptionMenu::OnIncrAAClicked()
+{
+	AAQuality = UKismetMathLibrary::Clamp(AAQuality + 1, 0, 4);
+}
+
+void UOptionMenu::OnDecrAAClicked()
+{
+	AAQuality = UKismetMathLibrary::Clamp(AAQuality - 1, 0, 4);
 }
