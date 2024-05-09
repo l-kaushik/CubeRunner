@@ -3,6 +3,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/EditableText.h"
+#include "GameFramework/GameUserSettings.h"
 #include "OptionMenu.h"
 
 void UOptionMenu::NativeConstruct()
@@ -61,11 +62,17 @@ void UOptionMenu::NativeConstruct()
 		DecrWindow->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrWindowClicked);
 	}
 
-	//ResolutionMode
+	// ResolutionMode
 	if (IncrResolution && DecrResolution)
 	{
 		IncrResolution->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrResolutionClicked);
 		DecrResolution->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrResolutionClicked);
+	}
+
+	// Apply Settings
+	if (ApplySettings)
+	{
+		ApplySettings->OnClicked.AddDynamic(this, &UOptionMenu::OnApplySettingsClicked);
 	}
 }
 
@@ -150,6 +157,21 @@ void UOptionMenu::OnDecrWindowClicked()
 	WindowMode = UKismetMathLibrary::Clamp(WindowMode - 1, 0, 2);
 }
 
+EWindowMode::Type UOptionMenu::ConvertToEWindowMode(int32 InWindowMode)
+{
+	switch (InWindowMode)
+	{
+	case 0:
+		return EWindowMode::Fullscreen;
+	case 1:
+		return EWindowMode::WindowedFullscreen;
+	case 2:
+		return EWindowMode::Windowed;
+	default:
+		return EWindowMode::Windowed;
+	}
+}
+
 // Resolution Mode
 void UOptionMenu::OnIncrResolutionClicked()
 {
@@ -171,4 +193,22 @@ void UOptionMenu::OnDecrResolutionClicked()
 void UOptionMenu::FillResolutionArray()
 {
 	UKismetSystemLibrary::GetSupportedFullscreenResolutions(SupportedResolutions);
+}
+
+// Apply Settings
+void UOptionMenu::OnApplySettingsClicked()
+{
+	GameSettings = UGameUserSettings::GetGameUserSettings();
+
+	GameSettings->SetFrameRateLimit(FrameRate);
+	GameSettings->SetScreenResolution(Resolution);
+	GameSettings->SetShadowQuality(ShadowQuality);
+	GameSettings->SetShadingQuality(ShadingQuality);
+	GameSettings->SetAntiAliasingQuality(AAQuality);
+	GameSettings->SetTextureQuality(TextureQuality);
+	GameSettings->SetVSyncEnabled(VSyncEnabled);
+	GameSettings->SetFullscreenMode(ConvertToEWindowMode(WindowMode));
+	GameSettings->ApplyResolutionSettings(false);
+	GameSettings->ApplyNonResolutionSettings();
+	GameSettings->SaveSettings();
 }

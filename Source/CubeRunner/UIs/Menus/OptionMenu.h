@@ -115,6 +115,8 @@ protected:
 	void OnIncrWindowClicked();
 	UFUNCTION()
 	void OnDecrWindowClicked();
+	UFUNCTION()
+	EWindowMode::Type ConvertToEWindowMode(int32 WindowMode);
 
 	// Resolution Mode
 	UFUNCTION()
@@ -123,6 +125,10 @@ protected:
 	void OnDecrResolutionClicked();
 	UFUNCTION(BlueprintCallable)
 	void FillResolutionArray();
+
+	// Apply Settings
+	UFUNCTION()
+	void OnApplySettingsClicked();
 
 
 protected:
@@ -155,4 +161,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 ResolutionIndex;
+
+	UPROPERTY()
+	UGameUserSettings* GameSettings;
 };
