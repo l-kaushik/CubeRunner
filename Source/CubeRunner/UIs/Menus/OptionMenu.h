@@ -92,6 +92,18 @@ protected:
 	UFUNCTION()
 	void OnDecrVSyncClicked();
 
+	// Shader Quality
+	UFUNCTION()
+	void OnIncrShaderClicked();
+	UFUNCTION()
+	void OnDecrShaderClicked();
+
+	// Shadow Quality
+	UFUNCTION()
+	void OnIncrShadowClicked();
+	UFUNCTION()
+	void OnDecrShadowClicked();
+
 
 
 protected:
@@ -99,7 +111,13 @@ protected:
 	float FrameRate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 AAQuality;
+	int32 AAQuality;	
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 ShadingQuality;	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 ShadowQuality;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool VSyncEnabled;

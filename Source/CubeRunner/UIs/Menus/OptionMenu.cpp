@@ -28,6 +28,20 @@ void UOptionMenu::NativeConstruct()
 		IncrVSync->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrVSyncClicked);
 		DecrVSync->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrVSyncClicked);
 	}
+
+	//Shader
+	if (IncrShader && DecrShader)
+	{
+		IncrShader->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrShaderClicked);
+		DecrShader->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrShaderClicked);
+	}
+
+	//Shadow
+	if (IncrShadow && DecrShadow)
+	{
+		IncrShadow->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrShadowClicked);
+		DecrShadow->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrShadowClicked);
+	}
 }
 
 void UOptionMenu::OnPresetSettingClicked()
@@ -35,7 +49,6 @@ void UOptionMenu::OnPresetSettingClicked()
 }
 
 // Frame Rate
-
 void UOptionMenu::OnIncrFPSClicked()
 {
 	FrameRate = UKismetMathLibrary::FClamp(FrameRate + 30.f, 30.f, 180.f);
@@ -47,7 +60,6 @@ void UOptionMenu::OnDecrFPSClicked()
 }
 
 // Anti-Aliasing
-
 void UOptionMenu::OnIncrAAClicked()
 {
 	AAQuality = UKismetMathLibrary::Clamp(AAQuality + 1, 0, 4);
@@ -59,7 +71,6 @@ void UOptionMenu::OnDecrAAClicked()
 }
 
 // VSync
-
 void UOptionMenu::OnIncrVSyncClicked()
 {
 	VSyncEnabled = true;
@@ -68,4 +79,26 @@ void UOptionMenu::OnIncrVSyncClicked()
 void UOptionMenu::OnDecrVSyncClicked()
 {
 	VSyncEnabled = false;
+}
+
+// Shader Quality
+void UOptionMenu::OnIncrShaderClicked()
+{
+	ShadingQuality = UKismetMathLibrary::Clamp(ShadingQuality + 1, 0, 4);
+}
+
+void UOptionMenu::OnDecrShaderClicked()
+{
+	ShadingQuality = UKismetMathLibrary::Clamp(ShadingQuality + 1, 0, 4);
+}
+
+// Shadow Quality
+void UOptionMenu::OnIncrShadowClicked()
+{
+	ShadowQuality = UKismetMathLibrary::Clamp(ShadowQuality + 1, 0, 4);
+}
+
+void UOptionMenu::OnDecrShadowClicked()
+{
+	ShadowQuality = UKismetMathLibrary::Clamp(ShadowQuality - 1, 0, 4);
 }
