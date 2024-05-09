@@ -103,6 +103,12 @@ protected:
 	void OnIncrShadowClicked();
 	UFUNCTION()
 	void OnDecrShadowClicked();
+	
+	// Texture Quality
+	UFUNCTION()
+	void OnIncrTextureClicked();
+	UFUNCTION()
+	void OnDecrTextureClicked();
 
 
 
@@ -117,7 +123,10 @@ protected:
 	int32 ShadingQuality;	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 ShadowQuality;
+	int32 ShadowQuality;	
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 TextureQuality;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool VSyncEnabled;

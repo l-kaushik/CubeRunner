@@ -29,18 +29,25 @@ void UOptionMenu::NativeConstruct()
 		DecrVSync->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrVSyncClicked);
 	}
 
-	//Shader
+	// Shader
 	if (IncrShader && DecrShader)
 	{
 		IncrShader->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrShaderClicked);
 		DecrShader->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrShaderClicked);
 	}
 
-	//Shadow
+	// Shadow
 	if (IncrShadow && DecrShadow)
 	{
 		IncrShadow->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrShadowClicked);
 		DecrShadow->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrShadowClicked);
+	}
+
+	// Textue
+	if (IncrTexture && DecrTexture)
+	{
+		IncrTexture->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrTextureClicked);
+		DecrTexture->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrTextureClicked);
 	}
 }
 
@@ -101,4 +108,15 @@ void UOptionMenu::OnIncrShadowClicked()
 void UOptionMenu::OnDecrShadowClicked()
 {
 	ShadowQuality = UKismetMathLibrary::Clamp(ShadowQuality - 1, 0, 4);
+}
+
+// Texture Quality
+void UOptionMenu::OnIncrTextureClicked()
+{
+	TextureQuality = UKismetMathLibrary::Clamp(TextureQuality + 1, 0, 4);
+}
+
+void UOptionMenu::OnDecrTextureClicked()
+{
+	TextureQuality = UKismetMathLibrary::Clamp(TextureQuality - 1, 0, 4);
 }
