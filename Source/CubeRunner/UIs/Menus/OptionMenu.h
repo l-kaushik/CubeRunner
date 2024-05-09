@@ -10,6 +10,8 @@ class CUBERUNNER_API UOptionMenu : public UUserWidget
 	GENERATED_BODY()
 
 protected:
+	virtual void NativeConstruct();
+
 	// remove BlueprintReadWrite later
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UComboBoxString* PresetSetting;
@@ -67,5 +69,18 @@ protected:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UButton* ApplySettings;
+
+protected:
+
+	UFUNCTION()
+	void OnPresetSettingClicked();
+	UFUNCTION()
+	void OnIncrFPSClicked();
+	UFUNCTION()
+	void OnDecrFPSClicked();
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float FrameRate;
 
 };
