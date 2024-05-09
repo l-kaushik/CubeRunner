@@ -116,6 +116,15 @@ protected:
 	UFUNCTION()
 	void OnDecrWindowClicked();
 
+	// Resolution Mode
+	UFUNCTION()
+	void OnIncrResolutionClicked();
+	UFUNCTION()
+	void OnDecrResolutionClicked();
+	UFUNCTION(BlueprintCallable)
+	void FillResolutionArray();
+
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float FrameRate;
@@ -137,4 +146,13 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 WindowMode;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FIntPoint Resolution;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FIntPoint> SupportedResolutions;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 ResolutionIndex;
 };

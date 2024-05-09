@@ -1,11 +1,15 @@
 #include "Components/ComboBoxString.h"
 #include "Components/Button.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Components/EditableText.h"
 #include "OptionMenu.h"
 
 void UOptionMenu::NativeConstruct()
 {
+	// Fill resolution Array
+	FillResolutionArray();
+
 	// event function binding
 
 	// Frame Rate
@@ -55,6 +59,13 @@ void UOptionMenu::NativeConstruct()
 	{
 		IncrWindow->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrWindowClicked);
 		DecrWindow->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrWindowClicked);
+	}
+
+	//ResolutionMode
+	if (IncrResolution && DecrResolution)
+	{
+		IncrResolution->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrResolutionClicked);
+		DecrResolution->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrResolutionClicked);
 	}
 }
 
@@ -128,6 +139,7 @@ void UOptionMenu::OnDecrTextureClicked()
 	TextureQuality = UKismetMathLibrary::Clamp(TextureQuality - 1, 0, 4);
 }
 
+// Window Mode
 void UOptionMenu::OnIncrWindowClicked()
 {
 	WindowMode = UKismetMathLibrary::Clamp(WindowMode + 1, 0, 2);
@@ -136,4 +148,27 @@ void UOptionMenu::OnIncrWindowClicked()
 void UOptionMenu::OnDecrWindowClicked()
 {
 	WindowMode = UKismetMathLibrary::Clamp(WindowMode - 1, 0, 2);
+}
+
+// Resolution Mode
+void UOptionMenu::OnIncrResolutionClicked()
+{
+	ResolutionIndex = UKismetMathLibrary::Clamp(ResolutionIndex + 1, 0, SupportedResolutions.Num() - 1);
+	Resolution = SupportedResolutions[ResolutionIndex];
+
+	for (const auto i : SupportedResolutions)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Blue, FString::Printf(TEXT("x: %d, y: %d"), i.X, i.Y));
+	}
+}
+
+void UOptionMenu::OnDecrResolutionClicked()
+{
+	ResolutionIndex = UKismetMathLibrary::Clamp(ResolutionIndex - 1, 0, SupportedResolutions.Num() - 1);
+	Resolution = SupportedResolutions[ResolutionIndex];
+}
+
+void UOptionMenu::FillResolutionArray()
+{
+	UKismetSystemLibrary::GetSupportedFullscreenResolutions(SupportedResolutions);
 }
