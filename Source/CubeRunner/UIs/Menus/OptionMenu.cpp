@@ -21,6 +21,13 @@ void UOptionMenu::NativeConstruct()
 		IncrAliasing->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrAAClicked);
 		DecrAliasing->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrAAClicked);
 	}
+
+	// VSync
+	if (IncrVSync && DecrVSync)
+	{
+		IncrVSync->OnClicked.AddDynamic(this, &UOptionMenu::OnIncrVSyncClicked);
+		DecrVSync->OnClicked.AddDynamic(this, &UOptionMenu::OnDecrVSyncClicked);
+	}
 }
 
 void UOptionMenu::OnPresetSettingClicked()
@@ -49,4 +56,16 @@ void UOptionMenu::OnIncrAAClicked()
 void UOptionMenu::OnDecrAAClicked()
 {
 	AAQuality = UKismetMathLibrary::Clamp(AAQuality - 1, 0, 4);
+}
+
+// VSync
+
+void UOptionMenu::OnIncrVSyncClicked()
+{
+	VSyncEnabled = true;
+}
+
+void UOptionMenu::OnDecrVSyncClicked()
+{
+	VSyncEnabled = false;
 }

@@ -86,6 +86,12 @@ protected:
 	UFUNCTION()
 	void OnDecrAAClicked();
 
+	// VSync
+	UFUNCTION()
+	void OnIncrVSyncClicked();
+	UFUNCTION()
+	void OnDecrVSyncClicked();
+
 
 
 protected:
@@ -95,4 +101,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 AAQuality;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool VSyncEnabled;
 };
