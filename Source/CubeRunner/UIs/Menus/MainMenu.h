@@ -21,7 +21,14 @@ protected:
 	
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UCustomButton* QuitGameButton;
+	
+	UPROPERTY(EditAnywhere, Category ="Class References")
+	TSubclassOf<class UOptionMenu> OptionMenuClass;
 
+	UPROPERTY()
+	class UOptionMenu* OptionMenu;
+
+protected:
 	UFUNCTION()
 	void OnPlayClicked();
 	

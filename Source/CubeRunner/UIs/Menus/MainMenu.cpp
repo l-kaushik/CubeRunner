@@ -3,6 +3,7 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 
 #include "../Assets/CustomButton.h"
+#include "OptionMenu.h"
 #include "MainMenu.h"
 
 void UMainMenu::NativeConstruct()
@@ -33,7 +34,13 @@ void UMainMenu::OnOptionsClicked()
 {
 	// Remove other widgets
 	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+
 	// Create option widget
+	APlayerController* FPC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	check(FPC);
+	OptionMenu = CreateWidget<UOptionMenu>(FPC, OptionMenuClass);
+	check(OptionMenu);
+	OptionMenu->AddToPlayerScreen();
 }
 
 void UMainMenu::OnQuitGameButtonClicked()
