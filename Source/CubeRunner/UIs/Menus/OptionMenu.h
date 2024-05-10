@@ -9,12 +9,14 @@ class CUBERUNNER_API UOptionMenu : public UUserWidget
 {
 	GENERATED_BODY()
 
+
 protected:
 	virtual void NativeConstruct();
+	void InitializeUIElements();
 
 	// remove BlueprintReadWrite later
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UComboBoxString* PresetSetting;
+	class UComboBoxString* PresetSettings;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UButton* IncrAliasing;	
@@ -74,8 +76,6 @@ protected:
 
 	// Frame Rate
 	UFUNCTION()
-	void OnPresetSettingClicked();
-	UFUNCTION()
 	void OnIncrFPSClicked();
 	UFUNCTION()
 	void OnDecrFPSClicked();	
@@ -117,6 +117,8 @@ protected:
 	void OnDecrWindowClicked();
 	UFUNCTION()
 	EWindowMode::Type ConvertToEWindowMode(int32 WindowMode);
+	UFUNCTION()
+	int32 EWindowModeToInt(EWindowMode::Type WindowMode);
 
 	// Resolution Mode
 	UFUNCTION()
@@ -129,6 +131,19 @@ protected:
 	// Apply Settings
 	UFUNCTION()
 	void OnApplySettingsClicked();
+
+	// Preset Settings
+	UFUNCTION()
+	void OnPresetSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectionType);
+
+	UFUNCTION()
+	void SavePresetSetting();
+
+	UFUNCTION()
+	void LoadPresetSetting();
+
+	UFUNCTION(BlueprintCallable)
+	void LoadSettings();
 
 
 protected:
@@ -162,6 +177,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 ResolutionIndex;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString PresetSelected;
+
 	UPROPERTY()
-	UGameUserSettings* GameSettings;
+	UGameSaver* SaveGame;
+
+	UPROPERTY()
+	FString SaveGameSlotName;
 };

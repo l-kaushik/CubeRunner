@@ -4,15 +4,24 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/EditableText.h"
 #include "GameFramework/GameUserSettings.h"
+#include "Kismet/GameplayStatics.h"
+
+#include "../../GameObjects/GameSaver.h"
 #include "OptionMenu.h"
 
 void UOptionMenu::NativeConstruct()
 {
-	// Fill resolution Array
-	FillResolutionArray();
+	// Initialize Variables
+	SaveGameSlotName = "Slot1";
 
-	// event function binding
+	InitializeUIElements();
 
+	LoadSettings();
+}
+
+// event function binding
+void UOptionMenu::InitializeUIElements()
+{
 	// Frame Rate
 	if (IncrFPS && DecrFPS)
 	{
@@ -74,10 +83,12 @@ void UOptionMenu::NativeConstruct()
 	{
 		ApplySettings->OnClicked.AddDynamic(this, &UOptionMenu::OnApplySettingsClicked);
 	}
-}
 
-void UOptionMenu::OnPresetSettingClicked()
-{
+	// Preset Settings
+	if (PresetSettings)
+	{
+		PresetSettings->OnSelectionChanged.AddDynamic(this, &UOptionMenu::OnPresetSelectionChanged);
+	}
 }
 
 // Frame Rate
@@ -172,6 +183,21 @@ EWindowMode::Type UOptionMenu::ConvertToEWindowMode(int32 InWindowMode)
 	}
 }
 
+int32 UOptionMenu::EWindowModeToInt(EWindowMode::Type InWindowMode)
+{
+	switch (InWindowMode)
+	{
+	case EWindowMode::Fullscreen:
+		return 0;
+	case EWindowMode::WindowedFullscreen:
+		return 1;
+	case EWindowMode::Windowed:
+		return 2;
+	default:
+		return 2;
+	}
+}
+
 // Resolution Mode
 void UOptionMenu::OnIncrResolutionClicked()
 {
@@ -198,17 +224,127 @@ void UOptionMenu::FillResolutionArray()
 // Apply Settings
 void UOptionMenu::OnApplySettingsClicked()
 {
-	GameSettings = UGameUserSettings::GetGameUserSettings();
+	auto GameSettings = UGameUserSettings::GetGameUserSettings();
 
-	GameSettings->SetFrameRateLimit(FrameRate);
-	GameSettings->SetScreenResolution(Resolution);
-	GameSettings->SetShadowQuality(ShadowQuality);
-	GameSettings->SetShadingQuality(ShadingQuality);
-	GameSettings->SetAntiAliasingQuality(AAQuality);
-	GameSettings->SetTextureQuality(TextureQuality);
-	GameSettings->SetVSyncEnabled(VSyncEnabled);
-	GameSettings->SetFullscreenMode(ConvertToEWindowMode(WindowMode));
-	GameSettings->ApplyResolutionSettings(false);
-	GameSettings->ApplyNonResolutionSettings();
-	GameSettings->SaveSettings();
+	if (GameSettings)
+	{
+		GameSettings->SetFrameRateLimit(FrameRate);
+		GameSettings->SetScreenResolution(Resolution);
+		GameSettings->SetShadowQuality(ShadowQuality);
+		GameSettings->SetShadingQuality(ShadingQuality);
+		GameSettings->SetAntiAliasingQuality(AAQuality);
+		GameSettings->SetTextureQuality(TextureQuality);
+		GameSettings->SetVSyncEnabled(VSyncEnabled);
+		GameSettings->SetFullscreenMode(ConvertToEWindowMode(WindowMode));
+		GameSettings->ApplyResolutionSettings(false);
+		GameSettings->ApplyNonResolutionSettings();
+		GameSettings->SaveSettings();
+	}
+	else
+	{
+		// raise error
+	}
+}
+
+// Preset Settings
+void UOptionMenu::OnPresetSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectionType)
+{
+	auto GameSettings =	UGameUserSettings::GetGameUserSettings();
+
+	if (GameSettings)
+	{
+		SavePresetSetting();
+		PresetSettings->SetSelectedOption(SelectedItem);
+
+		if (SelectedItem == "Low")
+		{
+			GameSettings->SetOverallScalabilityLevel(0);
+		}
+		else if (SelectedItem == "Medium")
+		{
+			GameSettings->SetOverallScalabilityLevel(1);
+		}
+		else if (SelectedItem == "High")
+		{
+			GameSettings->SetOverallScalabilityLevel(2);
+		}
+		else if (SelectedItem == "Epic")
+		{
+			GameSettings->SetOverallScalabilityLevel(3);
+		}
+		else if (SelectedItem == "Cinematic")
+		{
+			GameSettings->SetOverallScalabilityLevel(4);;
+		}
+		else
+		{
+			GameSettings->SetOverallScalabilityLevel(1);;
+		}
+
+		GameSettings->ApplySettings(true);
+		GameSettings->SaveSettings();
+		LoadSettings();
+	}
+}
+
+void UOptionMenu::SavePresetSetting()
+{
+	if (!SaveGame)
+	{
+		SaveGame =Cast<UGameSaver>(UGameplayStatics::CreateSaveGameObject(UGameSaver::StaticClass()));
+	}
+	SaveGame->PresetSettingSelected = PresetSelected;
+
+	UGameplayStatics::SaveGameToSlot(SaveGame, SaveGameSlotName, 0);
+}
+
+void UOptionMenu::LoadPresetSetting()
+{
+	auto LoadGame = Cast<UGameSaver>(UGameplayStatics::LoadGameFromSlot(SaveGameSlotName, 0));
+
+	if (LoadGame)
+	{
+		PresetSelected = LoadGame->PresetSettingSelected;
+	}
+}
+
+void UOptionMenu::LoadSettings()
+{
+	// Fill resolution Array
+	FillResolutionArray();
+	LoadPresetSetting();
+	PresetSettings->SetSelectedOption(PresetSelected);
+
+	auto GameSettings = UGameUserSettings::GetGameUserSettings();
+
+	if (GameSettings)
+	{
+		GameSettings->LoadSettings(true);
+		FrameRate = GameSettings->GetFrameRateLimit();
+		Resolution = GameSettings->GetScreenResolution();
+		ShadowQuality = GameSettings->GetShadowQuality();
+		ShadingQuality = GameSettings->GetShadingQuality();
+		AAQuality = GameSettings->GetAntiAliasingQuality();
+		TextureQuality = GameSettings->GetTextureQuality();
+		VSyncEnabled = GameSettings->IsVSyncEnabled();
+		WindowMode = EWindowModeToInt(GameSettings->GetFullscreenMode());
+
+		// set resolution index
+		switch (Resolution.X)
+		{
+		case 720: ResolutionIndex = 0;
+			break;
+		case 1280: ResolutionIndex = 1;
+			break;
+		case 1920: ResolutionIndex = 2;
+			break;
+		case 2560: ResolutionIndex = 3;
+			break;
+		default: ResolutionIndex = 1;
+			break;
+		}
+		
+		OnApplySettingsClicked();
+	}
+
 }
