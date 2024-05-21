@@ -4,11 +4,16 @@
 #include "Blueprint/UserWidget.h"
 #include "OptionMenu.generated.h"
 
+class UGameSaver;
+
 UCLASS()
 class CUBERUNNER_API UOptionMenu : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY()
+	TSubclassOf<UUserWidget> PreviousWidgetReference;
 
 protected:
 	virtual void NativeConstruct();
@@ -144,6 +149,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void LoadSettings();
+
+	UFUNCTION()
+	void OnBackButtonClicked();
 
 
 protected:
