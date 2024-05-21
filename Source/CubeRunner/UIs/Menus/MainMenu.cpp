@@ -40,6 +40,7 @@ void UMainMenu::OnOptionsClicked()
 	check(FPC);
 	OptionMenu = CreateWidget<UOptionMenu>(FPC, OptionMenuClass);
 	check(OptionMenu);
+	OptionMenu->PreviousWidgetReference = MainMenuClassRef;
 	OptionMenu->AddToPlayerScreen();
 }
 
