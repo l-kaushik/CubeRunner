@@ -5,6 +5,7 @@
 #include "Components/EditableText.h"
 #include "GameFramework/GameUserSettings.h"
 #include "Kismet/GameplayStatics.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 #include "../../GameObjects/GameSaver.h"
 #include "OptionMenu.h"
@@ -88,6 +89,12 @@ void UOptionMenu::InitializeUIElements()
 	if (PresetSettings)
 	{
 		PresetSettings->OnSelectionChanged.AddDynamic(this, &UOptionMenu::OnPresetSelectionChanged);
+	}
+
+	// Back button
+	if (Back)
+	{
+		Back->OnClicked.AddDynamic(this, &UOptionMenu::OnBackButtonClicked);
 	}
 }
 
@@ -347,4 +354,17 @@ void UOptionMenu::LoadSettings()
 		OnApplySettingsClicked();
 	}
 
+}
+
+void UOptionMenu::OnBackButtonClicked()
+{
+	// Remove other widgets
+	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+
+	// create previous widget
+	APlayerController * FPC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	check(FPC);
+	auto PreviousWidget = CreateWidget(FPC, PreviousWidgetReference);
+	check(PreviousWidget);
+	PreviousWidget->AddToPlayerScreen();
 }
