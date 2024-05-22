@@ -5,6 +5,11 @@
 #include "../GameModeAndInterfaces/CubePlayerInterface.h"
 #include "CubePlayer.generated.h"
 
+class UInputAction;
+class UInputMappingContext;
+class UPauseMenu;
+struct FInputActionValue;
+
 UCLASS()
 class CUBERUNNER_API ACubePlayer : public ACharacter, public ICubePlayerInterface
 {
@@ -35,4 +40,22 @@ public:
 public:
 	void SetDeltaLocationX_Implementation(float x) override;
 	float GetDeltaLocationX_Implementation() override;
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enhanced Input")
+	UInputAction* MoveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enhanced Input")
+	UInputAction* PauseAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enhanced Input")
+	UInputMappingContext* DefaultInputContext;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blueprint Reference")
+	TSubclassOf<UPauseMenu> PauseMenuRef;
+
+protected:
+	void Move(const FInputActionValue& Value);
+	void Pause(const FInputActionValue& Value);
+
 };
