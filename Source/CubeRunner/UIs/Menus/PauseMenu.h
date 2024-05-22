@@ -11,6 +11,9 @@ class CUBERUNNER_API UPauseMenu : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	virtual FReply NativeOnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent) override;
+
 protected:
 	virtual void NativeConstruct();
 

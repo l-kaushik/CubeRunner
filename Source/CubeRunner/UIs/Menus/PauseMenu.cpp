@@ -7,6 +7,20 @@
 #include "OptionMenu.h"
 #include "PauseMenu.h"
 
+FReply UPauseMenu::NativeOnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent)
+{
+	const FKey Key = InKeyEvent.GetKey();
+
+	if (Key == EKeys::Escape || Key == EKeys::P)
+	{
+		OnResumeClicked();
+
+		return FReply::Handled();
+	}
+
+	return FReply::Unhandled();
+}
+
 void UPauseMenu::NativeConstruct()
 {
 	if (Resume)
@@ -52,6 +66,7 @@ void UPauseMenu::OnOptionsClicked()
 	check(OptionMenu);
 	OptionMenu->PreviousWidgetReference = PauseMenuClassRef;
 	OptionMenu->AddToPlayerScreen();
+	OptionMenu->SetKeyboardFocus();
 }
 
 void UPauseMenu::OnQuitGameButtonClicked()
