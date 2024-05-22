@@ -15,6 +15,8 @@ public:
 	UPROPERTY()
 	TSubclassOf<UUserWidget> PreviousWidgetReference;
 
+	virtual FReply NativeOnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent) override;
+
 protected:
 	virtual void NativeConstruct();
 	void InitializeUIElements();

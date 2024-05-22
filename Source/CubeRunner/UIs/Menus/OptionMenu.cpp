@@ -10,6 +10,20 @@
 #include "../../GameObjects/GameSaver.h"
 #include "OptionMenu.h"
 
+FReply UOptionMenu::NativeOnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent)
+{
+	const FKey Key = InKeyEvent.GetKey();
+
+	if (Key == EKeys::Escape || Key == EKeys::P)
+	{
+		OnBackButtonClicked();
+
+		return FReply::Handled();
+	}
+
+	return FReply::Unhandled();
+}
+
 void UOptionMenu::NativeConstruct()
 {
 	// Initialize Variables
@@ -367,4 +381,5 @@ void UOptionMenu::OnBackButtonClicked()
 	auto PreviousWidget = CreateWidget(FPC, PreviousWidgetReference);
 	check(PreviousWidget);
 	PreviousWidget->AddToPlayerScreen();
+	PreviousWidget->SetKeyboardFocus();
 }
