@@ -259,6 +259,7 @@ void UOptionMenu::OnApplySettingsClicked()
 		GameSettings->SetFullscreenMode(ConvertToEWindowMode(WindowMode));
 		GameSettings->ApplyResolutionSettings(false);
 		GameSettings->ApplyNonResolutionSettings();
+		GameSettings->ApplySettings(false);
 		GameSettings->SaveSettings();
 	}
 	else
@@ -340,7 +341,7 @@ void UOptionMenu::LoadSettings()
 
 	if (GameSettings)
 	{
-		GameSettings->LoadSettings(true);
+		//GameSettings->LoadSettings(true);
 		FrameRate = GameSettings->GetFrameRateLimit();
 		Resolution = GameSettings->GetScreenResolution();
 		ShadowQuality = GameSettings->GetShadowQuality();
@@ -365,9 +366,8 @@ void UOptionMenu::LoadSettings()
 			break;
 		}
 		
-		OnApplySettingsClicked();
+		//OnApplySettingsClicked();
 	}
-
 }
 
 void UOptionMenu::OnBackButtonClicked()
