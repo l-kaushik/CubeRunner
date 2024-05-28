@@ -41,17 +41,12 @@ void UPauseMenu::NativeConstruct()
 
 void UPauseMenu::OnResumeClicked()
 {
-	UGameplayStatics::SetGamePaused(GetWorld(), false);
-	
-	auto PlayerController = UGameplayStatics::GetPlayerController(UUserWidget::GetWorld(), 0);
-
-	if (PlayerController)
-	{
-		PlayerController->SetShowMouseCursor(true);
-		PlayerController->SetInputMode(FInputModeGameOnly());
-	}
-
 	UWidget::RemoveFromParent();
+	
+	UGameplayStatics::SetGamePaused(GetWorld(), false);
+	auto PlayerController = UGameplayStatics::GetPlayerController(UUserWidget::GetWorld(), 0);
+	PlayerController->SetShowMouseCursor(true);
+	PlayerController->SetInputMode(FInputModeGameOnly());
 }
 
 void UPauseMenu::OnOptionsClicked()

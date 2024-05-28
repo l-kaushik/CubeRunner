@@ -31,8 +31,8 @@ protected:
 	TSubclassOf<class UOptionMenu> OptionMenuClassRef;	
 	
 	UPROPERTY(EditAnywhere, Category = "Class References")
-	TSubclassOf<class UPauseMenu> PauseMenuClassRef;
-
+	TSubclassOf<class UPauseMenu> PauseMenuClassRef;	
+	
 	UFUNCTION()
 	void OnResumeClicked();
 
