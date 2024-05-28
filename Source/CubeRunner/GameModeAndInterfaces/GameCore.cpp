@@ -31,17 +31,6 @@ void AGameCore::BeginPlay()
 	InitializeLastScoreHitTimer();
 }
 
-//Void AGameCore::EndPlay(const EEndPlayerReason::Type EndPlayReason)
-//{
-//	if (PlayerHud)
-//	{
-//		PlayerHud->RemoveFromParent();
-//		PlayerHud->nullptr;
-//	}
-//	
-//	Super::EndPlay(EndPlayReason);
-//}
-
 void AGameCore::AddScore(int Score)
 {
 	/*
