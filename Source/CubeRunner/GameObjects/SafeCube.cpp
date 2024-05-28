@@ -23,10 +23,10 @@ void ASafeCube::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* O
 		if (GameMode->Implements<UGameStateInterface>())
 		{
 			IGameStateInterface::Execute_SetScore(GameMode, 1);
-
 		}
 
 		// play sound at location 
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SoundAsset, this->GetActorLocation());
 
 		this->Destroy();
 	}
