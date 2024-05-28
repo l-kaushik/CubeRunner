@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 
+#include "../UIs/EndScreen.h"
 #include "DeathWall.h"
 
 // Sets default values
@@ -28,9 +29,17 @@ void ADeathWall::BeginPlay()
 void ADeathWall::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (Cast<ACharacter>(OtherActor) == (UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) {
-		OtherActor->AddActorWorldOffset(FVector(0.0f, 0.0f, 0.0f));
 
-			//Create End UI
+		OtherActor->AddActorWorldOffset(FVector(0.0f, 0.0f, 0.0f));
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+		// create end screen widget
+		APlayerController* FPC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		check(FPC);
+		auto EndScreenWidget = CreateWidget(FPC, EndScreenRef);
+		check(EndScreenWidget);
+		EndScreenWidget->AddToPlayerScreen();
+		EndScreenWidget->SetIsFocusable(true);
 	}
 }
 

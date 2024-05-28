@@ -7,6 +7,7 @@
 
 class UBoxComponent;
 class UStaticMeshComponent;
+class UEndScreen;
 
 UCLASS()
 class CUBERUNNER_API ADeathWall : public AActor
@@ -29,4 +30,7 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* WallMesh;
+
+	UPROPERTY(EditAnywhere, Category = "Blueprint References")
+	TSubclassOf<UEndScreen> EndScreenRef;
 };
