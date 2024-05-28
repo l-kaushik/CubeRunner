@@ -9,6 +9,7 @@
 
 class AEnemy;
 class ASafeCube;
+class UEndScreen;
 
 UCLASS()
 class CUBERUNNER_API AFloor : public AActor
@@ -42,6 +43,9 @@ protected:
 	TSubclassOf<class AEnemy> EnemyCubeBlueprintClass;
 	UPROPERTY(EditAnywhere, Category = "Enemy");
 	TSubclassOf<class AEnemy> SafeCubeBlueprintClass;
+
+	UPROPERTY(EditAnywhere, Category = "Blueprint References")
+	TSubclassOf<UEndScreen> EndScreenRef;
 
 protected:
 	UFUNCTION(BlueprintCallable)

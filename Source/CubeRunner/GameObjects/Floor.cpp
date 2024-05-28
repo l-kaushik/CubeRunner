@@ -11,6 +11,7 @@
 #include "SafeCube.h"
 #include "../GameModeAndInterfaces/GameCore.h"
 #include "../GameModeAndInterfaces/GameStateInterface.h"
+#include "../UIs/EndScreen.h"
 #include "Floor.h"
 
 // Sets default values
@@ -171,9 +172,12 @@ void AFloor::OutOfBoundTrigger(AActor* OtherActor)
 	{
 		UGameplayStatics::SetGamePaused(GetWorld(), true);
 
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "create end ui");
-
-		// Create End UI
+		// create end screen widget
+		APlayerController* FPC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		check(FPC);
+		auto EndScreenWidget = CreateWidget(FPC, EndScreenRef);
+		check(EndScreenWidget);
+		EndScreenWidget->AddToPlayerScreen();
+		EndScreenWidget->SetIsFocusable(true);
 	}
 }
-
