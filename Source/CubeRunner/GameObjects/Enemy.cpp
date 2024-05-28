@@ -67,6 +67,7 @@ void AEnemy::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Othe
 		}
 		
 		// play sound at location [implement this function here]
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SoundAsset, this->GetActorLocation());
 
 		this->Destroy();
 	}
