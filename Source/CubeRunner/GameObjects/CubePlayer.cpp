@@ -3,6 +3,7 @@
 #include "InputAction.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 #include "../UIs/Menus/PauseMenu.h"
 #include "CubePlayer.h"
@@ -78,7 +79,7 @@ void ACubePlayer::Move(const FInputActionValue& Value)
 
 void ACubePlayer::Pause(const FInputActionValue& Value)
 {
-	// Create option widget
+	// Create pause menu widget
 	APlayerController* FPC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	check(FPC);
 	auto PauseMenu = CreateWidget<UPauseMenu>(FPC, PauseMenuRef);
