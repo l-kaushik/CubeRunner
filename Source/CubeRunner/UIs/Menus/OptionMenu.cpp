@@ -224,11 +224,6 @@ void UOptionMenu::OnIncrResolutionClicked()
 {
 	ResolutionIndex = UKismetMathLibrary::Clamp(ResolutionIndex + 1, 0, SupportedResolutions.Num() - 1);
 	Resolution = SupportedResolutions[ResolutionIndex];
-
-	for (const auto i : SupportedResolutions)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Blue, FString::Printf(TEXT("x: %d, y: %d"), i.X, i.Y));
-	}
 }
 
 void UOptionMenu::OnDecrResolutionClicked()
@@ -372,8 +367,8 @@ void UOptionMenu::LoadSettings()
 
 void UOptionMenu::OnBackButtonClicked()
 {
-	// Remove other widgets
-	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+	// Remove this widget
+	UWidget::RemoveFromParent();
 
 	// create previous widget
 	APlayerController * FPC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
