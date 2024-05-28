@@ -32,8 +32,8 @@ void UMainMenu::OnPlayClicked()
 
 void UMainMenu::OnOptionsClicked()
 {
-	// Remove other widgets
-	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+	// Remove this widgets
+	UWidget::RemoveFromParent();
 
 	// Create option widget
 	APlayerController* FPC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
@@ -42,6 +42,7 @@ void UMainMenu::OnOptionsClicked()
 	check(OptionMenu);
 	OptionMenu->PreviousWidgetReference = MainMenuClassRef;
 	OptionMenu->AddToPlayerScreen();
+	OptionMenu->SetIsFocusable(true);
 }
 
 void UMainMenu::OnQuitGameButtonClicked()
